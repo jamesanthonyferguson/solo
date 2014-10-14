@@ -10,7 +10,7 @@ angular.module('201409SoloApp')
     $scope.correct;
     $scope.list = []
     $scope.add = function(bool){
-        if (bool) {
+        if (bool && ($scope.correct < 5) && ($scope.correct > 0)) {
         var temp = {q: $scope.question, a: {1: $scope.a1, 2: $scope.a2, 3: $scope.a3, 4: $scope.a4}, correct: $scope.correct}
         $scope.list.push(temp);
         $http.post('/api/things', temp)

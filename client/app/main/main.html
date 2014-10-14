@@ -3,7 +3,7 @@
 
   <header ng-show="host" class="hero-unit" id="banner">
     <div class="container">
-      <h1>Modern Trivia</h1>
+      <h1>Pub Trivia</h1>
       <p class="lead">Trivia for the Modern Era</p>
     </div>
   </header>
@@ -23,10 +23,10 @@
       <div class="container" ng-if="gameplay">
         <div ng-model="question">
           <div class="row question">{{question.q}}</div>
-          <div ng-class="host ? 'n' : 'controller'" ng-click="answer(1)" class="col-sm-6 qa a1">1. {{question.a.1}}</div>
-          <div ng-class="host ? 'n' : 'controller'" ng-click="answer(2)" class="col-sm-6 qa a2">2. {{question.a.2}}</div>
-          <div ng-class="host ? 'n' : 'controller'" ng-click="answer(3)" class="col-sm-6 qa a3">3. {{question.a.3}}</div>
-          <div ng-class="host ? 'n' : 'controller'" ng-click="answer(4)" class="col-sm-6 qa a4">4. {{question.a.4}}</div>
+          <div ng-class="{controller: !host, clicked: chosenAnswer === 1}" ng-click="answer(1)" class="col-sm-6 qa a1">1. {{question.a.1}}</div>
+          <div ng-class="{controller: !host, clicked: chosenAnswer === 2}" ng-click="answer(2)" class="col-sm-6 qa a2">2. {{question.a.2}}</div>
+          <div ng-class="{controller: !host, clicked: chosenAnswer === 3}" ng-click="answer(3)" class="col-sm-6 qa a3">3. {{question.a.3}}</div>
+          <div ng-class="{controller: !host, clicked: chosenAnswer === 4}" ng-click="answer(4)" class="col-sm-6 qa a4">4. {{question.a.4}}</div>
         </div>
         <button ng-show="host" ng-click="nextQuestion()">Next</button>
         <button ng-show="host" ng-click="gameOver()">End Game</button>

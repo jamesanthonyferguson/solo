@@ -33,3 +33,9 @@
     margin-top: 70px;
     border-top: 1px solid #E5E5E5;
 }
+
+.clicked {
+    background-color: rgb(30,30,80);
+    font-weight: bold;
+    color: white;
+}

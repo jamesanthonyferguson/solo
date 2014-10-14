@@ -13,6 +13,7 @@ angular.module('201409SoloApp')
     })
     socket.socket.on('nextQuestion', function(){
       console.log('time for the next question');
+      $scope.chosenAnswer = 0;
       $scope.answered = false;
       if (!socket.socket.host) {
         $scope.current = $scope.current + 1;
@@ -38,6 +39,7 @@ angular.module('201409SoloApp')
     $scope.answered = false;
     $scope.gameEnd = false;
     $scope.hideTop = false;
+    $scope.chosenAnswer = 0;
     $scope.results;
     $scope.current = 0;
     $scope.question;
@@ -82,6 +84,7 @@ angular.module('201409SoloApp')
     $scope.nextQuestion = function(){
       if (socket.dataObject.host){
         console.log("next question");
+        $scope.chosenAnswer = 0;
         $scope.current = $scope.current + 1;
         $scope.question = $scope.questions[$scope.current];
         socket.socket.emit("nextQuestion", $scope.room);
@@ -90,6 +93,7 @@ angular.module('201409SoloApp')
     $scope.answer = function(num){
       if (!socket.dataObject.host) {
         if (!$scope.answered){
+          $scope.chosenAnswer = num;
           $scope.answered = true;
           console.log(socket);
           var correct = false;
