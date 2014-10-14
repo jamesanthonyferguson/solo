@@ -41,9 +41,9 @@
     <div ng-show="settings" class="row">
       <div class="col-sm-6">
         <h1 class="page-header">Create Game</h1>
-          <span class="col-md-4 col-lg-4 col-sm-6" ng-model="room">Your room is {{room}}</span>
-          <button type="button" class='btn' ng-click="createGame()">Create Room</button>
-          <button type="button" class='btn' ng-click="startGame()">Start Game</button>
+          <span class="col-md-4 col-lg-4 col-sm-6" ng-show="room" ng-model="room">Your room is {{room}}</span>
+          <button type="button" class='btn btn-success' ng-click="createGame()">Create Room</button>
+          <button type="button" class='btn btn-primary' ng-click="startGame()">Start Game</button>
 
       </div>
       <div class="col-sm-6">
@@ -51,9 +51,9 @@
         <div class="row">
           <input type="text" placeholder="username" ng-model="username" class="col-md-4 col-lg-4 col-sm-6"/>
           <input type="text" placeholder="room name" ng-model="joinRoom" class="col-md-4 col-lg-4 col-sm-6"/>
-          <button type="button" ng-click="joinGame()">Join</button>
+          <button type="button" class="btn btn-primary" ng-click="joinGame()">Join</button>
         </div>
-        <div ng-if="joinMessage" class="row">Joined! Waiting on host...</div>
+        <div ng-if="joinMessage" class="row"><h4 class='success green'>Joined! Waiting on host...</h4></div>
       </div>
 
     </div>
