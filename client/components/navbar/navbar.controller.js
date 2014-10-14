@@ -5,6 +5,9 @@ angular.module('201409SoloApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
+    }, {
+      'title': "Create Quiz",
+      'link': '/create'
     }];
 
     $scope.isCollapsed = true;
