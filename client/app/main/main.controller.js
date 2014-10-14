@@ -100,8 +100,3 @@ angular.module('201409SoloApp')
       }
     }
 });
-
-
-    // $scope.questions = [{q: "What is the best color?", a: {1: "blue", 2: "red", 3: "green", 4: "orange"}, correct: 1}, 
-    //   {q: "What is the best number?", a: {1: "Three", 2: "Four", 3: "Two", 4: "One"}, correct: 3},
-    //   {q: "What is the best city?", a: {1: "London", 2: "Sydney", 3: "New York", 4: "San Francisco"}, correct: 2}];

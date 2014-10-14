@@ -1,0 +1,14 @@
+<div ng-controller="CreateCtrl" class="col-md-12">
+  <form method="post" novalidate>
+    <input ng-model="question"type="text"/>
+    <div>
+      <input ng-model="a1"type="text"/>
+      <input ng-model="a2"type="text"/>
+      <input ng-model="a3"type="text"/>
+      <input ng-model="a4"type="text"/>
+      <input ng-model="correct" type="text"/>
+    </div>
+    <button ng-click="add()">Submit</button>
+  </form>
+  <div ng-repeat="q in list">Question: {{q.q}} Answers: {{q.a.1}} {{q.a.2}} {{q.a.3}} {{q.a.4}} {{q.correct}}</div>
+</div>
