@@ -30,7 +30,9 @@ angular.module('201409SoloApp')
       $http.get('/api/things')
       .success(function(data){
         console.log("YOUR DATA HAS BEEN COLLECTED:",data);
+        $scope.max = data.length;
         $scope.questions = data;
+        console.log(data.length)
         $scope.question = $scope.questions[0];
         if (callback) {
           callback();
