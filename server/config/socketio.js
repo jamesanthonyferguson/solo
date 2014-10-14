@@ -10,6 +10,7 @@ var config = require('./environment');
 function onDisconnect(socket) {
 }
 
+var socketData = {}
 // When the user connects.. perform this
 function onConnect(socket) {
   // When the client emits 'info', this listens and executes
@@ -29,6 +30,20 @@ function onConnect(socket) {
       console.log("joining game", data);
       socket.join(data.room);
       console.log(this)
+    })
+
+    socket.on('start', function(data){
+      console.log("starting game for room", data)
+      socket.broadcast.to(data).emit("starting");
+    })
+
+    socket.on('nextQuestion', function(data){
+      console.log("nextQuestion being sent to clients in room", data)
+      socket.broadcast.to(data).emit("nextQuestion");
+    })
+
+    socket.on('answer', function(data){
+
     })
 }
 

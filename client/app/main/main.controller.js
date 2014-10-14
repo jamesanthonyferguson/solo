@@ -2,34 +2,45 @@
 
 angular.module('201409SoloApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
-    // $scope.awesomeThings = [];
 
-    // $http.get('/api/things').success(function(awesomeThings) {
-    //   $scope.awesomeThings = awesomeThings;
-    //   socket.syncUpdates('thing', $scope.awesomeThings);
-    // });
-
-    // $scope.addThing = function() {
-    //   if($scope.newThing === '') {
-    //     return;
-    //   }
-    //   $http.post('/api/things', { name: $scope.newThing });
-    //   $scope.newThing = '';
-    // };
-
-    // $scope.deleteThing = function(thing) {
-    //   $http.delete('/api/things/' + thing._id);
-    // };
-
+    socket.socket.on('starting', function(){
+      console.log("Your game is starting!")
+      $scope.gameplay = true;
+      $scope.settings = false;
+    })
+    socket.socket.on('nextQuestion', function(){
+      console.log('time for the next question');
+      $scope.answered = false;
+      if (!socket.socket.host) {
+        $scope.current = $scope.current + 1;
+        $scope.question = $scope.questions[$scope.current];
+      }
+    })
+    $scope.questions = [{q: "What is the best color?", a: {1: "blue", 2: "red", 3: "green", 4: "orange"}, correct: 1}, 
+      {q: "What is the best number?", a: {1: "Three", 2: "Four", 3: "Two", 4: "One"}, correct: 3},
+      {q: "What is the best city?", a: {1: "London", 2: "Sydney", 3: "New York", 4: "San Francisco"}, correct: 2}];
+    $scope.settings = true;
+    $scope.gameplay = false;
+    $scope.answered = false;
+    $scope.current = 0;
+    $scope.question = $scope.questions[0];
     $scope.room;
     $scope.joinRoom;
     $scope.username;
+    $scope.startGame = function(){
+      if (socket.dataObject && socket.dataObject.host === true) {
+        socket.socket.emit("start", socket.dataObject.room);
+        console.log('meow');
+        $scope.gameplay = true;
+        $scope.settings = false;
+      }
+    }
     $scope.createGame = function(){
       console.log(socket);
       console.log("clicked");
       $scope.room = Math.floor(Math.random()*10000);
-      var dataObject = {room: $scope.room, host: true}
-      socket.dataObject = dataObject
+      var dataObject = {room: $scope.room, host: true, username: 'host'};
+      socket.dataObject = dataObject;
       socket.socket.emit("createGame", dataObject);
     }
     $scope.joinGame = function(){
@@ -38,9 +49,21 @@ angular.module('201409SoloApp')
       socket.dataObject = dataObject
       socket.socket.emit("joinGame", dataObject);
     }
-
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
-  });
+    $scope.nextQuestion = function(){
+      if (socket.dataObject.host){
+        console.log("next question");
+        $scope.current = $scope.current + 1;
+        $scope.question = $scope.questions[$scope.current];
+        socket.socket.emit("nextQuestion", $scope.room);
+      }
+    }
+    $scope.answer = function(num){
+      if (!socket.dataObject.host) {
+        if (!$scope.answered){
+          $scope.answered = true;
+          console.log('answering:', num);
+          socket.socket.emit("answer", num);
+        }
+      }
+    }
+});
