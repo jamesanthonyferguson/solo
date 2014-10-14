@@ -10,6 +10,15 @@
 
 <div class="container" ng-controller="MainCtrl">
   <div class="row">
+    <div class="container" ng-if="gameOver">
+      <h2> Results </h2>
+      <div ng-repeat="(name, result) in results">
+      {{name}} : {{result.tally}}
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
     <div class="container" ng-if="gameplay">
       <div ng-model="question">
         <div class="row question">{{question.q}}</div>
@@ -19,6 +28,7 @@
         <div ng-click="answer(4)" class="col-sm-6 qa a4">4. {{question.a.4}}</div>
       </div>
       <button ng-click="nextQuestion()">Next</button>
+      <button ng-click="gameOver()">End Game</button>
     </div>
   </div>
   <div ng-show="settings" class="row">

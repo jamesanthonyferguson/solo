@@ -10,7 +10,7 @@ var config = require('./environment');
 function onDisconnect(socket) {
 }
 
-var socketData = {}
+var socketData = {};
 // When the user connects.. perform this
 function onConnect(socket) {
   // When the client emits 'info', this listens and executes
@@ -23,27 +23,49 @@ function onConnect(socket) {
 
     socket.on('createGame', function(data){
       console.log("creating game:",data);
-      socket.join(data.room);
     })
 
     socket.on('joinGame', function(data){
       console.log("joining game", data);
       socket.join(data.room);
       console.log(this)
+      console.log(socket.id);
+      var id = socket.id;
+      var room = data.room;
+      var user = data.username
+      socketData[room] = {};
+      socketData[room][user] = {tally: 0, answers: {}};
+      socket.join(data.room);
+      console.log(socketData);
     })
 
     socket.on('start', function(data){
-      console.log("starting game for room", data)
+      console.log("starting game for room", data);
       socket.broadcast.to(data).emit("starting");
     })
 
     socket.on('nextQuestion', function(data){
-      console.log("nextQuestion being sent to clients in room", data)
+      console.log("nextQuestion being sent to clients in room", data);
       socket.broadcast.to(data).emit("nextQuestion");
     })
 
-    socket.on('answer', function(data){
+    socket.on('gameOver', function(data){
+      console.log("game over being sent to clients in room", data);
+      console.log("finalScores", socketData);
+      console.log("finalScoresforRoom", socketData[data]);
+      socket.broadcast.to(data).emit("gameOver", socketData[data]);
+    })
 
+    socket.on('answer', function(data){
+      var questionNumber = data.q;
+      var roomA = data.r;
+      var userA = data.u;
+      var answer = data.a;
+      var correct = data.c;
+      socketData[roomA][userA]['answers'][questionNumber] = answer;
+      if (correct) {
+        socketData[roomA][userA]['tally'] = socketData[roomA][userA]['tally'] +1 || 1;
+      }
     })
 }
 

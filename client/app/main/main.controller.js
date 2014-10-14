@@ -16,19 +16,33 @@ angular.module('201409SoloApp')
         $scope.question = $scope.questions[$scope.current];
       }
     })
+    socket.socket.on('gameOver', function(data){
+      console.log(data);
+      $scope.results = data;
+      $scope.gameOver = true;
+      $scope.gameplay = false;
+    })
     $scope.questions = [{q: "What is the best color?", a: {1: "blue", 2: "red", 3: "green", 4: "orange"}, correct: 1}, 
       {q: "What is the best number?", a: {1: "Three", 2: "Four", 3: "Two", 4: "One"}, correct: 3},
       {q: "What is the best city?", a: {1: "London", 2: "Sydney", 3: "New York", 4: "San Francisco"}, correct: 2}];
     $scope.settings = true;
     $scope.gameplay = false;
     $scope.answered = false;
+    $scope.gameOver = false;
+    $scope.results;
     $scope.current = 0;
     $scope.question = $scope.questions[0];
     $scope.room;
     $scope.joinRoom;
     $scope.username;
+    $scope.gameOver = function(){
+      if (socket.dataObject && socket.dataObject.host) {
+        console.log("game ending")
+        socket.socket.emit("gameOver", socket.dataObject.room);
+      }
+    }
     $scope.startGame = function(){
-      if (socket.dataObject && socket.dataObject.host === true) {
+      if (socket.dataObject && socket.dataObject.host) {
         socket.socket.emit("start", socket.dataObject.room);
         console.log('meow');
         $scope.gameplay = true;
@@ -61,8 +75,14 @@ angular.module('201409SoloApp')
       if (!socket.dataObject.host) {
         if (!$scope.answered){
           $scope.answered = true;
-          console.log('answering:', num);
-          socket.socket.emit("answer", num);
+          console.log(socket);
+          var correct = false;
+          if (num === $scope.question.correct) {
+            correct = true;
+          }
+          var dat = {q: $scope.current, a: num, r: socket.dataObject.room, u: socket.dataObject.username, c: correct}
+          console.log('answering:', dat);
+          socket.socket.emit("answer", dat);
         }
       }
     }
