@@ -12,7 +12,8 @@ function onDisconnect(socket) {
 
 var socketData = {};
 // When the user connects.. perform this
-function onConnect(socket) {
+function onConnect(socket, socketio) {
+  console.log(socketio, '2222!!!!!!!!')
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
@@ -52,10 +53,10 @@ function onConnect(socket) {
     })
 
     socket.on('gameOver', function(data){
-      console.log(socket.id);
       console.log("game over being sent to clients in room", data);
-      console.log("finalScores", socketData);
-      console.log("finalScoresforRoom", socketData[data]);
+      //Try and Emit to self (works)
+      clients[socket.id].emit("gameOver", socketData[data]);
+      //Try and Emit to others (works)
       socket.broadcast.to(data).emit("gameOver", socketData[data]);
     })
 
@@ -71,6 +72,7 @@ function onConnect(socket) {
       }
     })
 }
+var clients = {};
 
 module.exports = function (socketio) {
   // socket.io (v1.x.x) is powered by debug.
@@ -89,6 +91,8 @@ module.exports = function (socketio) {
   // }));
 
   socketio.on('connection', function (socket, socketio) {
+    socketio = this;
+    clients[socket.id] = socket;
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
             process.env.DOMAIN;
@@ -102,7 +106,7 @@ module.exports = function (socketio) {
     });
 
     // Call onConnect.
-    onConnect(socket);
+    onConnect(socket, socketio);
     console.info('[%s] CONNECTED', socket.address);
   });
 };

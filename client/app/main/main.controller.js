@@ -21,6 +21,7 @@ angular.module('201409SoloApp')
       }
     })
     socket.socket.on('gameOver', function(data){
+      console.log("Here are the results");
       $scope.endGame(data);
     })
     $scope.questions;
@@ -30,7 +31,9 @@ angular.module('201409SoloApp')
         console.log("YOUR DATA HAS BEEN COLLECTED:",data);
         $scope.questions = data;
         $scope.question = $scope.questions[0];
-        callback();
+        if (callback) {
+          callback();
+        }
       })
     }
     $scope.host = true;

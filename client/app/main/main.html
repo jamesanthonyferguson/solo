@@ -15,12 +15,14 @@
         <h2> Results </h2>
         <div class="results" ng-repeat="(name, result) in results">
         {{name}} : {{result.tally}}
-        </div>    
+        </div>
+        <a href="/create"><button class='btn'>Play Again?</button></a>
       </div>
     </div>
 
     <div class="row">
       <div class="container" ng-if="gameplay">
+        <div class="row">
         <div ng-model="question">
           <div class="row question">{{question.q}}</div>
           <div ng-class="{controller: !host, clicked: chosenAnswer === 1}" ng-click="answer(1)" class="col-sm-6 qa a1">1. {{question.a.1}}</div>
@@ -28,16 +30,20 @@
           <div ng-class="{controller: !host, clicked: chosenAnswer === 3}" ng-click="answer(3)" class="col-sm-6 qa a3">3. {{question.a.3}}</div>
           <div ng-class="{controller: !host, clicked: chosenAnswer === 4}" ng-click="answer(4)" class="col-sm-6 qa a4">4. {{question.a.4}}</div>
         </div>
-        <button ng-show="host" ng-click="nextQuestion()">Next</button>
-        <button ng-show="host" ng-click="gameOver()">End Game</button>
+        </div>
+        <div class='row'>
+          <br>
+          <button ng-show="host" class='btn' ng-click="nextQuestion()">Next</button>
+          <button ng-show="host" class='btn' ng-click="gameOver()">End Game</button>
+        </div>
       </div>
     </div>
     <div ng-show="settings" class="row">
       <div class="col-sm-6">
         <h1 class="page-header">Create Game</h1>
           <span class="col-md-4 col-lg-4 col-sm-6" ng-model="room">Your room is {{room}}</span>
-          <button type="button" ng-click="createGame()">Create Room</button>
-          <button type="button" ng-click="startGame()">Start Game</button>
+          <button type="button" class='btn' ng-click="createGame()">Create Room</button>
+          <button type="button" class='btn' ng-click="startGame()">Start Game</button>
 
       </div>
       <div class="col-sm-6">
