@@ -1,6 +1,7 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="full-height">
+  <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container">
+  <div class="container">
   <div ng-controller="CreateCtrl" class="col-md-12">
   <h1>Create a New Question</h1>
     <form name="create" method="post" novalidate>
@@ -26,4 +27,11 @@
     <tr ng-repeat="q in list"><td>Question: {{q.q}}</td><td>Answers: {{q.a.1}} {{q.a.2}} {{q.a.3}} {{q.a.4}}</td><td>{{q.correct}}</td></tr>
     </table>
   </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Pub Trivia © 2014 | James Ferguson | <a href="/">home</a> | <a href="/create">create</a></p>
+    </div>
+  </footer>
 </div>
