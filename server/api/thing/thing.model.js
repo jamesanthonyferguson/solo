@@ -4,9 +4,14 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ThingSchema = new Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  q: String,
+  a: {
+    1: String,
+    2: String,
+    3: String,
+    4: String
+  },
+  correct: Number
 });
 
 module.exports = mongoose.model('Thing', ThingSchema);

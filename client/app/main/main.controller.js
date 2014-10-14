@@ -5,8 +5,10 @@ angular.module('201409SoloApp')
 
     socket.socket.on('starting', function(){
       console.log("Your game is starting!")
-      $scope.gameplay = true;
-      $scope.settings = false;
+      $scope.getQuestions(function(){
+        $scope.gameplay = true;
+        $scope.settings = false;
+      })
     })
     socket.socket.on('nextQuestion', function(){
       console.log('time for the next question');
@@ -17,32 +19,43 @@ angular.module('201409SoloApp')
       }
     })
     socket.socket.on('gameOver', function(data){
-      console.log(data);
-      $scope.results = data;
-      $scope.gameOver = true;
-      $scope.gameplay = false;
+      $scope.endGame(data);
     })
-    $scope.questions = [{q: "What is the best color?", a: {1: "blue", 2: "red", 3: "green", 4: "orange"}, correct: 1}, 
-      {q: "What is the best number?", a: {1: "Three", 2: "Four", 3: "Two", 4: "One"}, correct: 3},
-      {q: "What is the best city?", a: {1: "London", 2: "Sydney", 3: "New York", 4: "San Francisco"}, correct: 2}];
+    $scope.questions;
+    $scope.getQuestions = function(callback){
+      $http.get('/api/things')
+      .success(function(data){
+        console.log("YOUR DATA HAS BEEN COLLECTED:",data);
+        $scope.questions = data;
+        $scope.question = $scope.questions[0];
+        callback();
+      })
+    }
     $scope.settings = true;
     $scope.gameplay = false;
     $scope.answered = false;
-    $scope.gameOver = false;
+    $scope.gameEnd = false;
     $scope.results;
     $scope.current = 0;
-    $scope.question = $scope.questions[0];
+    $scope.question;
     $scope.room;
     $scope.joinRoom;
     $scope.username;
+    $scope.endGame = function(data){
+      console.log("end game triggered");
+      $scope.results = data;
+      $scope.gameEnd = true;
+      $scope.gameplay = false;
+    }
     $scope.gameOver = function(){
       if (socket.dataObject && socket.dataObject.host) {
-        console.log("game ending")
+        console.log("game ending");
         socket.socket.emit("gameOver", socket.dataObject.room);
       }
     }
     $scope.startGame = function(){
       if (socket.dataObject && socket.dataObject.host) {
+        $scope.getQuestions();
         socket.socket.emit("start", socket.dataObject.room);
         console.log('meow');
         $scope.gameplay = true;
@@ -87,3 +100,8 @@ angular.module('201409SoloApp')
       }
     }
 });
+
+
+    // $scope.questions = [{q: "What is the best color?", a: {1: "blue", 2: "red", 3: "green", 4: "orange"}, correct: 1}, 
+    //   {q: "What is the best number?", a: {1: "Three", 2: "Four", 3: "Two", 4: "One"}, correct: 3},
+    //   {q: "What is the best city?", a: {1: "London", 2: "Sydney", 3: "New York", 4: "San Francisco"}, correct: 2}];

@@ -10,9 +10,9 @@
 
 <div class="container" ng-controller="MainCtrl">
   <div class="row">
-    <div class="container" ng-if="gameOver">
+    <div class="container" ng-if="gameEnd">
       <h2> Results </h2>
-      <div ng-repeat="(name, result) in results">
+      <div class="results" ng-repeat="(name, result) in results">
       {{name}} : {{result.tally}}
       </div>    
     </div>
@@ -34,7 +34,7 @@
   <div ng-show="settings" class="row">
     <div class="col-sm-6">
       <h1 class="page-header">Create Game</h1>
-        <span class="col-md-4 col-lg-4 col-sm-6" ng-model="room">{{room}}</span>
+        <span class="col-md-4 col-lg-4 col-sm-6" ng-model="room">Your room is {{room}}</span>
         <button type="button" ng-click="createGame()">Create Room</button>
         <button type="button" ng-click="startGame()">Start Game</button>
 
@@ -51,6 +51,6 @@
 
 <footer class="footer">
   <div class="container">
-      <p>Pub Trivia </p>
+      <p>Pub Trivia</p>
   </div>
 </footer>

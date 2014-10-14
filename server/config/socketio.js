@@ -33,7 +33,9 @@ function onConnect(socket) {
       var id = socket.id;
       var room = data.room;
       var user = data.username
-      socketData[room] = {};
+      if (socketData[room] === undefined) {
+        socketData[room] = {};
+      }
       socketData[room][user] = {tally: 0, answers: {}};
       socket.join(data.room);
       console.log(socketData);
@@ -50,6 +52,7 @@ function onConnect(socket) {
     })
 
     socket.on('gameOver', function(data){
+      console.log(socket.id);
       console.log("game over being sent to clients in room", data);
       console.log("finalScores", socketData);
       console.log("finalScoresforRoom", socketData[data]);
@@ -85,7 +88,7 @@ module.exports = function (socketio) {
   //   handshake: true
   // }));
 
-  socketio.on('connection', function (socket) {
+  socketio.on('connection', function (socket, socketio) {
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
             process.env.DOMAIN;
