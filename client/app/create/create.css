@@ -2,9 +2,15 @@
   width: 80%;
   margin: 10 auto;
   margin-bottom: 20px;
+  font-size: 24px;
 }
 
 .createAnswer {
   width: 20%;
   margin: 10px 5px 10px 5px;
+  font-size: 20px;
+}
+
+.addCreate {
+  margin-top: 5px;
 }

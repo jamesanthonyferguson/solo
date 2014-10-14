@@ -10,14 +10,20 @@
       <div class="row">
         <input required class="createAnswer" placeholder="Answer 1" ng-model="a1" type="text"/>
         <input required class="createAnswer" placeholder="Answer 2" ng-model="a2" type="text"/>
+      </div>
+      <div class="row">
         <input required class="createAnswer" placeholder="Answer 3" ng-model="a3" type="text"/>
         <input required class="createAnswer" placeholder="Answer 4" ng-model="a4" type="text"/>
       </div>
       <div class="row">
-        <input placeholder="Correct Answer Number" ng-model="correct" type="number"/>
+        <input placeholder="Correct Answer No." ng-model="correct" class="createAnswer" type="number"/>
       </div>
-      <button ng-click="add(create.$valid)">Submit</button>
+      <div class="row">
+        <button class="addCreate" ng-click="add(create.$valid)">Submit</button>
+      </div>
     </form>
-    <div ng-repeat="q in list">Question: {{q.q}} Answers: {{q.a.1}} {{q.a.2}} {{q.a.3}} {{q.a.4}} {{q.correct}}</div>
+    <table class="table">
+    <tr ng-repeat="q in list"><td>Question: {{q.q}}</td><td>Answers: {{q.a.1}} {{q.a.2}} {{q.a.3}} {{q.a.4}}</td><td>{{q.correct}}</td></tr>
+    </table>
   </div>
 </div>
