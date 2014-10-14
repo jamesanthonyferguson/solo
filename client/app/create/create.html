@@ -1,14 +1,23 @@
-<div ng-controller="CreateCtrl" class="col-md-12">
-  <form method="post" novalidate>
-    <input ng-model="question"type="text"/>
-    <div>
-      <input ng-model="a1"type="text"/>
-      <input ng-model="a2"type="text"/>
-      <input ng-model="a3"type="text"/>
-      <input ng-model="a4"type="text"/>
-      <input ng-model="correct" type="text"/>
-    </div>
-    <button ng-click="add()">Submit</button>
-  </form>
-  <div ng-repeat="q in list">Question: {{q.q}} Answers: {{q.a.1}} {{q.a.2}} {{q.a.3}} {{q.a.4}} {{q.correct}}</div>
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div ng-controller="CreateCtrl" class="col-md-12">
+  <h1>Create a New Question</h1>
+    <form name="create" method="post" novalidate>
+      <div class="row">
+      <input required class="createQuestion" placeholder="Question" ng-model="question" type="text"/>
+      </div>
+      <div class="row">
+        <input required class="createAnswer" placeholder="Answer 1" ng-model="a1" type="text"/>
+        <input required class="createAnswer" placeholder="Answer 2" ng-model="a2" type="text"/>
+        <input required class="createAnswer" placeholder="Answer 3" ng-model="a3" type="text"/>
+        <input required class="createAnswer" placeholder="Answer 4" ng-model="a4" type="text"/>
+      </div>
+      <div class="row">
+        <input placeholder="Correct Answer Number" ng-model="correct" type="number"/>
+      </div>
+      <button ng-click="add(create.$valid)">Submit</button>
+    </form>
+    <div ng-repeat="q in list">Question: {{q.q}} Answers: {{q.a.1}} {{q.a.2}} {{q.a.3}} {{q.a.4}} {{q.correct}}</div>
+  </div>
 </div>
