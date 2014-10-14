@@ -1,51 +1,53 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div ng-controller="MainCtrl">
+  <div ng-show="host" ng-include="'components/navbar/navbar.html'"></div>
 
-<header class="hero-unit" id="banner">
+  <header ng-show="host" class="hero-unit" id="banner">
+    <div class="container">
+      <h1>Modern Trivia</h1>
+      <p class="lead">Trivia for the Modern Era</p>
+    </div>
+  </header>
+
+
   <div class="container">
-    <h1>Modern Trivia</h1>
-    <p class="lead">Trivia for the Modern Era</p>
-  </div>
-</header>
-
-
-<div class="container" ng-controller="MainCtrl">
-  <div class="row">
-    <div class="container" ng-if="gameEnd">
-      <h2> Results </h2>
-      <div class="results" ng-repeat="(name, result) in results">
-      {{name}} : {{result.tally}}
-      </div>    
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="container" ng-if="gameplay">
-      <div ng-model="question">
-        <div class="row question">{{question.q}}</div>
-        <div ng-click="answer(1)" class="col-sm-6 qa a1">1. {{question.a.1}}</div>
-        <div ng-click="answer(2)" class="col-sm-6 qa a2">2. {{question.a.2}}</div>
-        <div ng-click="answer(3)" class="col-sm-6 qa a3">3. {{question.a.3}}</div>
-        <div ng-click="answer(4)" class="col-sm-6 qa a4">4. {{question.a.4}}</div>
+    <div class="row">
+      <div class="container" ng-if="gameEnd">
+        <h2> Results </h2>
+        <div class="results" ng-repeat="(name, result) in results">
+        {{name}} : {{result.tally}}
+        </div>    
       </div>
-      <button ng-click="nextQuestion()">Next</button>
-      <button ng-click="gameOver()">End Game</button>
-    </div>
-  </div>
-  <div ng-show="settings" class="row">
-    <div class="col-sm-6">
-      <h1 class="page-header">Create Game</h1>
-        <span class="col-md-4 col-lg-4 col-sm-6" ng-model="room">Your room is {{room}}</span>
-        <button type="button" ng-click="createGame()">Create Room</button>
-        <button type="button" ng-click="startGame()">Start Game</button>
-
-    </div>
-    <div class="col-sm-6">
-      <h1 class="page-header">Join Game</h1>
-        <input type="text" placeholder="username" ng-model="username" class="col-md-4 col-lg-4 col-sm-6"/>
-        <input type="text" placeholder="room name" ng-model="joinRoom" class="col-md-4 col-lg-4 col-sm-6"/>
-        <button type="button" ng-click="joinGame()">Join</button>
     </div>
 
+    <div class="row">
+      <div class="container" ng-if="gameplay">
+        <div ng-model="question">
+          <div class="row question">{{question.q}}</div>
+          <div ng-class="host ? 'n' : 'controller'" ng-click="answer(1)" class="col-sm-6 qa a1">1. {{question.a.1}}</div>
+          <div ng-class="host ? 'n' : 'controller'" ng-click="answer(2)" class="col-sm-6 qa a2">2. {{question.a.2}}</div>
+          <div ng-class="host ? 'n' : 'controller'" ng-click="answer(3)" class="col-sm-6 qa a3">3. {{question.a.3}}</div>
+          <div ng-class="host ? 'n' : 'controller'" ng-click="answer(4)" class="col-sm-6 qa a4">4. {{question.a.4}}</div>
+        </div>
+        <button ng-show="host" ng-click="nextQuestion()">Next</button>
+        <button ng-show="host" ng-click="gameOver()">End Game</button>
+      </div>
+    </div>
+    <div ng-show="settings" class="row">
+      <div class="col-sm-6">
+        <h1 class="page-header">Create Game</h1>
+          <span class="col-md-4 col-lg-4 col-sm-6" ng-model="room">Your room is {{room}}</span>
+          <button type="button" ng-click="createGame()">Create Room</button>
+          <button type="button" ng-click="startGame()">Start Game</button>
+
+      </div>
+      <div class="col-sm-6">
+        <h1 class="page-header">Join Game</h1>
+          <input type="text" placeholder="username" ng-model="username" class="col-md-4 col-lg-4 col-sm-6"/>
+          <input type="text" placeholder="room name" ng-model="joinRoom" class="col-md-4 col-lg-4 col-sm-6"/>
+          <button type="button" ng-click="joinGame()">Join</button>
+      </div>
+
+    </div>
   </div>
 </div>
 

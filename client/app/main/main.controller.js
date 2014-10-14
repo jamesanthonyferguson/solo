@@ -8,6 +8,7 @@ angular.module('201409SoloApp')
       $scope.getQuestions(function(){
         $scope.gameplay = true;
         $scope.settings = false;
+        $scope.host = socket.dataObject.host;
       })
     })
     socket.socket.on('nextQuestion', function(){
@@ -31,10 +32,12 @@ angular.module('201409SoloApp')
         callback();
       })
     }
+    $scope.host = true;
     $scope.settings = true;
     $scope.gameplay = false;
     $scope.answered = false;
     $scope.gameEnd = false;
+    $scope.hideTop = false;
     $scope.results;
     $scope.current = 0;
     $scope.question;
