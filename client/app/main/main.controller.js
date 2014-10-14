@@ -8,6 +8,7 @@ angular.module('201409SoloApp')
       $scope.getQuestions(function(){
         $scope.gameplay = true;
         $scope.settings = false;
+        $scope.joinMessage = false;
         $scope.host = socket.dataObject.host;
       })
     })
@@ -49,6 +50,7 @@ angular.module('201409SoloApp')
     $scope.room;
     $scope.joinRoom;
     $scope.username;
+    $scope.joinMesage = false;
     $scope.endGame = function(data){
       console.log("end game triggered");
       $scope.results = data;
@@ -68,6 +70,7 @@ angular.module('201409SoloApp')
         console.log('meow');
         $scope.gameplay = true;
         $scope.settings = false;
+        $scope.joinMessage= false;
       }
     }
     $scope.createGame = function(){
@@ -79,10 +82,13 @@ angular.module('201409SoloApp')
       socket.socket.emit("createGame", dataObject);
     }
     $scope.joinGame = function(){
-      console.log($scope.joinRoom);
-      var dataObject = {room: $scope.joinRoom, host: false, username: $scope.username}
-      socket.dataObject = dataObject
-      socket.socket.emit("joinGame", dataObject);
+      if (($scope.joinRoom > 0) && $scope.username && ($scope.joinRoom <10000)) {
+        console.log($scope.joinRoom);
+        $scope.joinMessage = true;
+        var dataObject = {room: $scope.joinRoom, host: false, username: $scope.username}
+        socket.dataObject = dataObject;
+        socket.socket.emit("joinGame", dataObject);
+      }
     }
     $scope.nextQuestion = function(){
       if (socket.dataObject.host){
