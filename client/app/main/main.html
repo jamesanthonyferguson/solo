@@ -9,7 +9,6 @@
     </div>
   </header>
 
-
   <div class="container">
     <div class="row">
       <div class="container" ng-if="gameEnd">
@@ -53,6 +52,7 @@
         <div class="row">
           <div class="col-md-4 col-lg-4 col-sm-6 room-menu" ng-show="room" ng-model="room">Your room is {{room}}</div>
           <div class="col-md-4 col-lg-4 col-sm-6 room-menu-empty" ng-hide="room" ng-model="room"></div>
+          <div ng-repeat="player in players">{{player}}</div>
         </div>
       </div>
 

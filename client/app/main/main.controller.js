@@ -11,7 +11,8 @@ angular.module('201409SoloApp')
         $scope.joinMessage = false;
         $scope.host = socket.dataObject.host;
       })
-    })
+    });
+    
     socket.socket.on('nextQuestion', function(){
       console.log('time for the next question');
       $scope.chosenAnswer = 0;
@@ -20,11 +21,18 @@ angular.module('201409SoloApp')
         $scope.current = $scope.current + 1;
         $scope.question = $scope.questions[$scope.current];
       }
-    })
+    });
+    
     socket.socket.on('gameOver', function(data){
       console.log("Here are the results");
       $scope.endGame(data);
-    })
+    });
+    
+    socket.socket.on('newPlayer', function(data){
+      $scope.players.push(data);
+      console.log("A new player has joined");
+    });
+    
     $scope.questions;
     $scope.getQuestions = function(callback){
       $http.get('/api/things')
@@ -39,6 +47,7 @@ angular.module('201409SoloApp')
         }
       })
     }
+    $scope.players = [];
     $scope.host = true;
     $scope.settings = true;
     $scope.gameplay = false;
@@ -79,7 +88,7 @@ angular.module('201409SoloApp')
       console.log(socket);
       console.log("clicked");
       $scope.room = Math.floor(Math.random()*10000);
-      var dataObject = {room: $scope.room, host: true, username: 'host'};
+      var dataObject = {room: $scope.room, host: true, username: 'YourHost'};
       socket.dataObject = dataObject;
       socket.socket.emit("createGame", dataObject);
     }

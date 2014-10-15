@@ -13,7 +13,6 @@ function onDisconnect(socket) {
 var socketData = {};
 // When the user connects.. perform this
 function onConnect(socket, socketio) {
-  console.log(socketio, '2222!!!!!!!!')
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
@@ -24,6 +23,7 @@ function onConnect(socket, socketio) {
 
     socket.on('createGame', function(data){
       console.log("creating game:",data);
+      socket.join(data.room);
     })
 
     socket.on('joinGame', function(data){
@@ -33,13 +33,14 @@ function onConnect(socket, socketio) {
       console.log(socket.id);
       var id = socket.id;
       var room = data.room;
-      var user = data.username
+      var user = data.username;
       if (socketData[room] === undefined) {
         socketData[room] = {};
       }
       socketData[room][user] = {tally: 0, answers: {}};
       socket.join(data.room);
       console.log(socketData);
+      socket.broadcast.to(data.room).emit("newPlayer", user);
     })
 
     socket.on('start', function(data){
