@@ -46,11 +46,16 @@
     <div ng-show="settings" class="row">
       <div class="col-sm-6">
         <h1 class="page-header">Create Game</h1>
-          <span class="col-md-4 col-lg-4 col-sm-6" ng-show="room" ng-model="room">Your room is {{room}}</span>
+        <div class="row">
           <button type="button" class='btn btn-success' ng-click="createGame()">Create Room</button>
           <button type="button" class='btn btn-primary' ng-click="startGame()">Start Game</button>
-
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-lg-4 col-sm-6 room-menu" ng-show="room" ng-model="room">Your room is {{room}}</div>
+          <div class="col-md-4 col-lg-4 col-sm-6 room-menu-empty" ng-hide="room" ng-model="room"></div>
+        </div>
       </div>
+
       <div class="col-sm-6">
         <h1 class="page-header">Join Game</h1>
         <div class="row">
